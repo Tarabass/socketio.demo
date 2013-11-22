@@ -6,13 +6,14 @@ exports.initialize = function(server){
 	var chatInfra = io.of("/chat_infra")
 		.on("connection",function(socket){
 			socket.on("set_name",function(data){
-			socket.set('nickname',data.name,function(){
-			socket.emit('name_set',data);
-			socket.send(JSON.stringify({type:'serverMessage',
-				message: data.name + ' Welcome to the most interesting chat room on earth!'}));
-		 	socket.broadcast.emit('user_entered',data);
+				socket.set('nickname',data.name,function(){
+					socket.emit('name_set',data);
+					socket.send(JSON.stringify({
+						type:'serverMessage',
+						message: data.name + ' Welcome to the most interesting chat room on earth!'
+					});
 				});
-			});
+				socket.broadcast.emit('user_entered',data);
 
 		});
 
